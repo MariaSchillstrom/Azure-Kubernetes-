@@ -142,3 +142,98 @@ public class Svamp
 }
 ```
 
+### 1.4 Uppdatera .csproj&#x20;
+
+Det vi gör här är att vi lägger till dependencies, beroenden för vår MongoDB.
+
+Öppna din .csproj och ersätt innehållet med nedan.&#x20;
+
+```bash
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.28.0" />
+  </ItemGroup>
+
+</Project>
+```
+
+
+
+### 1.5 Skapa index.html
+
+Navigera till din rootmapp:
+
+```
+cd svamp-app
+```
+
+Skapa wwwroot inuti din Svampsidan-app:
+
+```
+mkdir webapp/Svampsidan/wwwroot
+```
+
+Skapa index.html, här har jag valt en simpel index.html som lämpar sig för min sida.
+
+Svampappen
+
+```html
+<div>
+    <input type="text" id="svampNamn" placeholder="Svampens namn">
+    <button onclick="addSvamp()">Lägg till</button>
+</div>
+
+<div id="svampLista"></div>
+
+<script>
+    const API = '/api/svampar';
+
+    async function loadSvampar() {
+        const response = await fetch(API);
+        const svampar = await response.json();
+        
+        document.getElementById('svampLista').innerHTML = svampar.map(s => `
+            <div class="svamp-item">
+                ${s.name} - ${s.isComplete ? '✅ Hittad' : '❌ Inte hittad'}
+                <button onclick="deleteSvamp(${s.id})">Ta bort</button>
+            </div>
+        `).join('');
+    }
+
+    async function addSvamp() {
+        const namn = document.getElementById('svampNamn').value;
+        await fetch(API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: Date.now(), name: namn, isComplete: false })
+        });
+        document.getElementById('svampNamn').value = '';
+        loadSvampar();
+    }
+
+    async function deleteSvamp(id) {
+        await fetch(`${API}/${id}`, { method: 'DELETE' });
+        loadSvampar();
+    }
+
+    loadSvampar();
+</script>
+```
+
+
+
+
+
+
+
+
+
+
+
