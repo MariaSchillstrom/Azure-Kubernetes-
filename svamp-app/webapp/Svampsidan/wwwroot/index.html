@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Svampappen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .svamp-item {
+            padding: 10px;
+            margin: 10px 0;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍄 Svampappen</h1>
+    
+    <div>
+        <input type="text" id="svampNamn" placeholder="Svampens namn">
+        <button onclick="addSvamp()">Lägg till</button>
+    </div>
+    
+    <div id="svampLista"></div>
+
+    <script>
+        const API = '/api/svampar';
+
+        async function loadSvampar() {
+            const response = await fetch(API);
+            const svampar = await response.json();
+            
+            document.getElementById('svampLista').innerHTML = svampar.map(s => `
+                <div class="svamp-item">
+                    ${s.name} - ${s.isComplete ? '✅ Hittad' : '❌ Inte hittad'}
+                    <button onclick="deleteSvamp(${s.id})">Ta bort</button>
+                </div>
+            `).join('');
+        }
+
+        async function addSvamp() {
+            const namn = document.getElementById('svampNamn').value;
+            await fetch(API, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: Date.now(), name: namn, isComplete: false })
+            });
+            document.getElementById('svampNamn').value = '';
+            loadSvampar();
+        }
+
+        async function deleteSvamp(id) {
+            await fetch(`${API}/${id}`, { method: 'DELETE' });
+            loadSvampar();
+        }
+
+        loadSvampar();
+    </script>
+</body>
+</html>
