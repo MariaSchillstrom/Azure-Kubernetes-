@@ -1,5 +1,4 @@
 services:
-  # MongoDB Database
   mongodb:
     image: mongo:latest
     container_name: svamp-mongodb
@@ -7,7 +6,7 @@ services:
       - "27017:27017"
     volumes:
       - mongodb-data:/data/db
-      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./init.mongo.js:/docker-entrypoint-initdb.d/init.mongo.js:ro
     networks:
       - svampapp-network
     healthcheck:
@@ -16,7 +15,6 @@ services:
       timeout: 5s
       retries: 5
 
-  # Mongo Express Admin UI
   mongo-express:
     image: mongo-express:latest
     container_name: svamp-mongo-express
@@ -32,29 +30,27 @@ services:
       mongodb:
         condition: service_healthy
 
-  # Svampapp WebApp
   webapp:
     build:
-      context: ./webapp/Svampsidan
+      context: ..
       dockerfile: Dockerfile
-    container_name: svampapp-webapp
-    ports:
-      - "8080:8080"
+    image: svampapp-web
     environment:
+      ASPNETCORE_URLS: http://+:8080
       MONGODB_HOST: mongodb
       MONGODB_PORT: "27017"
       MONGODB_DATABASE: SvampappDb
+    ports:
+      - "8080:8080"
     networks:
       - svampapp-network
     depends_on:
       mongodb:
         condition: service_healthy
 
-# Named volume for MongoDB data persistence
 volumes:
   mongodb-data:
 
-# Custom network for container communication
 networks:
   svampapp-network:
     driver: bridge
