@@ -24,13 +24,13 @@
 
   <script>
     const API = '/api/svampar';
-    let nextId = 3; // ✅ TILLAGT: Håller koll på nästa ID
+    let nextId = 3; 
 
     async function loadSvampar() {
       const res = await fetch(API);
       const svampar = await res.json();
       
-      // ✅ TILLAGT: Uppdatera nextId baserat på befintliga svampar
+      
       if (svampar.length > 0) {
         nextId = Math.max(...svampar.map(s => s.id)) + 1;
       }
@@ -62,7 +62,7 @@
       await fetch(API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: nextId++, name, isComplete: false }) // ✅ ÄNDRAT: nextId++ istället för Date.now()
+        body: JSON.stringify({ id: nextId++, name, isComplete: false }) 
       });
 
       namnEl.value = '';
