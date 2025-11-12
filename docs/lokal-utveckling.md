@@ -1,4 +1,4 @@
-# Page 1
+# Lokal utveckling
 
 ## Inledning
 
@@ -53,13 +53,13 @@ svamp-app/webapp/Svampsidan/
 ✅ Ta bort svamp\
 ✅ Data sparas i MongoDB och överlever omstarter
 
-#### **Åtkomst**
+#### **1.4 Åtkomst**
 
 * **Svampapp:** [http://localhost:8080](http://localhost:8080)
 * **CRUD-sidan:** [http://localhost:8080/crud.html](http://localhost:8080/crud.html)
 * **Mongo Express:** [http://localhost:8081](http://localhost:8081) (admin/pass)
 
-#### **1.4 Frontend-struktur**
+#### **1.5 Frontend-struktur**
 
 Frontenden består av två separata HTML-filer:
 
@@ -76,7 +76,7 @@ Frontenden består av två separata HTML-filer:
 * Markera svampar som "hittade"
 * Ta bort svampar
 
-#### **1.5 Fördelar med denna separation:**
+#### **1.6 Fördelar med denna separation:**
 
 * ✅ Tydlig separation mellan presentation och funktionalitet
 * ✅ Bättre användarupplevelse med dedikerad arbetssida
@@ -84,7 +84,7 @@ Frontenden består av två separata HTML-filer:
 
 
 
-#### 1.6 Bilder
+#### 1.7 Bilder
 
 <figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
@@ -92,21 +92,28 @@ Frontenden består av två separata HTML-filer:
 
 <figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
+***
 
 
-**Delete (kantarell)**
+
+#### **Delete**&#x20;
+
+* Tagit bort kantarell&#x20;
+
+
 
 <figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
-**Update**&#x20;
+#### **Update**&#x20;
 
 * Från Karljohan till KarlJohan/Stensopp
 
 <figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
 
-**Create**
+#### **Create**
 
 * Testsvamp är tillagd manuellt via terminalen, innan jag fick ordning på Program.cs samt CRUD.html
 * Trattkantarell är tillagd via <img src=".gitbook/assets/image (4).png" alt="" data-size="original">
 
 <figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+

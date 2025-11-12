@@ -1,10 +1,10 @@
-# Page 2
+# Push till ACR
 
-#### **DEL 2: PUSH TILL ACR** \*¹&#x20;
+#### **2: PUSH TILL ACR** \*¹&#x20;
 
 **Varför ACR?** Min Docker image finns just nu endast lokalt på datorn. AKS (Azure Kubernetes Service) kan inte komma åt min lokala dator, därför behöver imagen finnas i molnet. ACR (Azure Container Registry) fungerar som ett molnbaserat bildbibliotek där Kubernetes kan hämta imagen.
 
-#### **Flöde:**
+#### **2.1 Flöde:**
 
 ```
 Lokal dator (Docker image) 
@@ -14,7 +14,7 @@ ACR (Lagring i Azure)
 AKS (Kubernetes kör appen)
 ```
 
-#### **Steg som utfördes:**
+#### **2.2 Steg som utfördes:**
 
 1. **Skapade Resource Group:**
 
@@ -48,4 +48,4 @@ docker push svampapp.azurecr.io/svampapp:v1
 
 <figure><img src=".gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
 
-**Resultat:** Docker imagen finns nu i `svampapp.azurecr.io/svampapp:v1` och kan användas av AKS.
+#### **2.3 Resultat:** Docker imagen finns nu i `svampapp.azurecr.io/svampapp:v1` och kan användas av AKS.
