@@ -2,42 +2,19 @@
 
 ## Inledning
 
-Jag har valt att skapa en applikation för  svampentusiaster. Versionen är i sin enkelhet, då den primära uppgiften var att implementera ett kubernetes-kluster.
+Jag har valt att skapa en applikation för svampentusiaster. Syftet med projektet är i sin enkelhet att implementera ett Kubernetes-kluster.
 
-Jag valde att skapa klustret i Azure, då jag är mer förtjust i det än AWS.
+Jag valde att skapa klustret i **Azure**, eftersom jag personligen föredrar den plattformen framför **AWS**.
 
-Detta innebär givetvis att jag inte har en komplett instruktion att följa, så fick fint fråga LLM på de delar där jag inte kunde följa någon form av instruktion.
+Eftersom det inte fanns någon komplett instruktion att följa, fick jag i vissa delar söka vägledning via **LLM** (Large Language Model) för att hitta lämpliga lösningar.
 
-Ordningen på mitt projekt har gjorts enligt nedan;
+Projektets olika moment har genomförts i den ordning som presenteras nedan.;
 
-| Steg | Lärarens moment | Min  motsvarighet (Azure) | Vad du gör i det steget |
-| ---- | --------------- | ------------------------- | ----------------------- |
 
-| 1️⃣ | MongoDB Todo App Development | **Utveckla Svampsidan lokalt (med MongoDB)** | Byggt själva applikationen lokalt. Testa CRUD-funktionalitet med MongoDB. **Containerisera med Docker & Docker Compose.** |
-| --- | ---------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 
-| 2️⃣ | Fundamentals | **Kubernetes-grunder (Fundamentals)** | Förstå pods, services, deployments, namespaces och YAML. Förbered för nästa steg. |
-| --- | ------------ | ------------------------------------- | --------------------------------------------------------------------------------- |
+<table><thead><tr><th>Steg</th><th>Lärarens moment</th><th width="212.7777099609375">Min motsvarighet (Azure)</th><th>Vad jag gör</th></tr></thead><tbody><tr><td>1</td><td>MongoDB Todo App Development</td><td>Utveckla Svampsidan lokalt</td><td>Bygg app, testa CRUD, containerisera med Docker Compose</td></tr><tr><td>2</td><td>Inbakat i deploy (AWS)</td><td>Push till ACR</td><td>Bygg och pusha image till Azure Container Registry</td></tr><tr><td>3</td><td>AWS EKS / Kubernetes GKE</td><td>Skapa AKS-kluster</td><td>Provisionera Kubernetes-kluster i Azure</td></tr><tr><td>4</td><td>Kubernetes EKS</td><td>Skapa Kubernetes Manifests</td><td>Skriv YAML-filer (deployment, service, secret, etc.)</td></tr><tr><td>5</td><td>Deploy Todo App / Kustomize</td><td>Deploya till AKS</td><td>Använd kubectl apply för manuell deploy</td></tr><tr><td>6</td><td>Ingress</td><td>Installera Nginx Ingress</td><td>Exponera appen externt via ingress.yaml</td></tr><tr><td>7</td><td>ArgoCD</td><td>Aktivera GitOps med ArgoCD</td><td>Installera ArgoCD, anslut repo, automatisk synk</td></tr></tbody></table>
 
-| 3️⃣ | Inbakat i deploysteget i AWS | **Push till Azure Container Registry (ACR)** | Skapa `Dockerfile`, bygg och pusha imaget till ACR. (`az acr build` eller `docker push`) |
-| --- | ---------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------- |
-
-| 4️⃣ | AWS EKS / Kubernetes GKE | **Skapa AKS-kluster** | Provisionera klustret i Azure och koppla det till ditt ACR (så AKS kan dra din image). |
-| --- | ------------------------ | --------------------- | -------------------------------------------------------------------------------------- |
-
-| 5️⃣ | Kubernetes EKS | **Skapa Kubernetes Manifests** | Skriv YAML-filer: `deployment.yaml`, `service.yaml`, ev. `configmap.yaml`, `secret.yaml`. Lägg i t.ex. `/manifests`-mapp i repo:t. |
-| --- | -------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-
-| 6️⃣ | — (mellan Deploy Todo App / Kustomize) | **Deploya till AKS (kubectl apply)** | Testa att deploya manuellt för att se att allting fungerar. |
-| --- | -------------------------------------- | ------------------------------------ | ----------------------------------------------------------- |
-
-| 7️⃣ | Ingress | **Installera Nginx Ingress Controller** | Installera ingress i klustret, skapa ingress.yaml, och exponera appen externt via en publik IP. |
-| --- | ------- | --------------------------------------- | ----------------------------------------------------------------------------------------------- |
-
-| 8️⃣ | ArgoCD | **Aktivera GitOps med ArgoCD** | Installera ArgoCD i AKS, anslut ditt repo och låt ArgoCD |
-| --- | ------ | ------------------------------ | -------------------------------------------------------- |
-
-#### **DEL 1: LOKAL UTVECKLING (MongoDB Todo App Development)**
+#### **DEL 1: Lokal utveckling(MongoDB Todo App Development)**
 
 **Applikationsbeskrivning**
 
@@ -65,11 +42,109 @@ svamp-app/webapp/Svampsidan/
     └── crud.html
 ```
 
-**OBS! In med bilder på CRUD**
+
+
+#### **Funktionalitet**
+
+✅ Visa lista med svampar\
+✅ Lägga till ny svamp\
+✅ Bocka i som "hittad"\
+✅ Uppdatera namn\
+✅ Ta bort svamp\
+✅ Data sparas i MongoDB och överlever omstarter
+
+**Åtkomst**
+
+* **Svampapp:** [http://localhost:8080](http://localhost:8080)
+* **CRUD-sidan:** [http://localhost:8080/crud.html](http://localhost:8080/crud.html)
+* **Mongo Express:** [http://localhost:8081](http://localhost:8081) (admin/pass)
+
+#### **Frontend-struktur**
+
+Frontenden består av två separata HTML-filer:
+
+**1. `index.html` - Startsida**
+
+* Enkel välkomstsida med information om appen
+* Länk till CRUD-funktionaliteten
+
+**2. `crud.html` - CRUD-funktionalitet**
+
+* Hantera alla svampoperationer (Create, Read, Update, Delete)
+* Visa lista med alla svampar
+* Lägga till nya svampar
+* Markera svampar som "hittade"
+* Ta bort svampar
+
+**Fördelar med denna separation:**
+
+* ✅ Tydlig separation mellan presentation och funktionalitet
+* ✅ Bättre användarupplevelse med dedikerad arbetssida
+* ✅ Enklare att underhålla och vidareutveckla
+
+#### **DEL 2: PUSH TILL ACR** \*¹&#x20;
+
+**Varför ACR?** Min Docker image finns just nu endast lokalt på datorn. AKS (Azure Kubernetes Service) kan inte komma åt min lokala dator, därför behöver imagen finnas i molnet. ACR (Azure Container Registry) fungerar som ett molnbaserat bildbibliotek där Kubernetes kan hämta imagen.
+
+**Flöde:**
+
+```
+Lokal dator (Docker image) 
+    ↓ PUSH
+ACR (Lagring i Azure) 
+    ↓ PULL
+AKS (Kubernetes kör appen)
+```
+
+**Steg som utfördes:**
+
+1. **Skapade Resource Group:**
+
+```bash
+   az group create --name mysvampsidaRG --location westeurope
+```
+
+2. **Skapade ACR:**
+
+```bash
+   az acr create --resource-group mysvampsidaRG --name svampapp --sku Basic
+```
+
+3. **Loggade in i ACR:**
+
+```bash
+   az acr login --name svampapp
+```
+
+4. **Tagga imagen för ACR**
+
+```bash
+   docker tag svampapp-web:latest svampapp.azurecr.io/svampapp:v1
+```
+
+5. **Pusha till ACR**
+
+```
+docker push svampapp.azurecr.io/svampapp:v1
+```
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+**Resultat:** Docker imagen finns nu i `svampapp.azurecr.io/svampapp:v1` och kan användas av AKS.
 
 
 
-**Slutgiltiga filer**
+
+
+
+
+
+
+
+
+
+
+### **Slutgiltiga filer**
 
 **Program.cs**
 
@@ -248,49 +323,60 @@ print("Database initialized with sample svampar!");
 
 ***
 
-**Funktionalitet**
 
-✅ Visa lista med svampar\
-✅ Lägga till ny svamp\
-✅ Bocka i som "hittad"\
-✅ Uppdatera namn\
-✅ Ta bort svamp\
-✅ Data sparas i MongoDB och överlever omstarter
-
-**Åtkomst**
-
-* **Svampapp:** [http://localhost:8080](http://localhost:8080)
-* **CRUD-sidan:** [http://localhost:8080/crud.html](http://localhost:8080/crud.html)
-* **Mongo Express:** [http://localhost:8081](http://localhost:8081) (admin/pass)
-
-#### Funktionalitet&#x20;
-
-#### **Frontend-struktur**
-
-Frontenden består av två separata HTML-filer:
-
-**1. `index.html` - Startsida**
-
-* Enkel välkomstsida med information om appen
-* Länk till CRUD-funktionaliteten
-
-**2. `crud.html` - CRUD-funktionalitet**
-
-* Hantera alla svampoperationer (Create, Read, Update, Delete)
-* Visa lista med alla svampar
-* Lägga till nya svampar
-* Markera svampar som "hittade"
-* Ta bort svampar
-
-**Fördelar med denna separation:**
-
-* ✅ Tydlig separation mellan presentation och funktionalitet
-* ✅ Bättre användarupplevelse med dedikerad arbetssida
-* ✅ Enklare att underhålla och vidareutveckla
 
 ***
 
 
+
+### Problem & lösningar
+
+#### **ACR** \*¹
+
+När jag försökte bygga och pusha min Docker image direkt i Azure med kommandot:
+
+bash
+
+````bash
+az acr build --registry svampapp --image svampapp:v1 .
+```
+
+Fick jag felet:
+```
+(TasksOperationsNotAllowed) ACR Tasks requests for the registry svampapp 
+are not permitted.
+````
+
+#### **Orsak:**
+
+Azure for Students-subscriptionen har **begränsningar** som blockerar ACR Tasks (Azure's tjänst för att bygga Docker images i molnet).
+
+#### **Lösning:**&#x20;
+
+Istället för att låta Azure bygga imagen byggde jag den **lokalt** och pushade sedan den färdiga imagen till ACR:
+
+**Se punkt 2**
+
+
+
+### Referenser
+
+**Websidor**
+
+
+
+{% embed url="https://portal.azure.com/#allservices/category/All" %}
+
+{% embed url="https://cloud-developer.educ8.se/clo/4.-run-cloud-applications/3.-kubernetes/index.html" %}
+
+{% embed url="https://kubernetes.io/" %}
+
+
+
+**LLM**
+
+* [https://claude.ai/login?returnTo=%2F%3F](https://claude.ai/login?returnTo=%2F%3F)
+* [https://chatgpt.com/](https://chatgpt.com/)
 
 
 
