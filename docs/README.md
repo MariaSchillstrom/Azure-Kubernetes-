@@ -1,3 +1,7 @@
+---
+layout: editorial
+---
+
 # Azure-Kubernetes
 
 #### **Namn: Maria Schillström**

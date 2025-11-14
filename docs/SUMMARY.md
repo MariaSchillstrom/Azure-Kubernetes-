@@ -10,4 +10,5 @@
 * [Nginx Ingress Controller](nginx-ingress-controller.md)
 * [ArgoCD (GitOps)](argocd-gitops.md)
 * [Problem & lösningar](problem-and-losningar.md)
+* [Förbättringsmöjligheter](forbattringsmojligheter.md)
 * [Slutgiltiga filer](slutgiltiga-filer.md)

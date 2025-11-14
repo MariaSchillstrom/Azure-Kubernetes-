@@ -1,6 +1,21 @@
-# Innehållsförteckning
+---
+layout:
+  width: default
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+---
 
-## Innehållsförteckning
+# Innehållsförteckning
 
 ### 1. Lokal utveckling (MongoDB Todo App Development)
 
@@ -11,6 +26,8 @@
 * 1.5 Frontend-struktur
 * 1.6 Fördelar med denna separation
 * 1.7 Bilder
+
+
 
 ### 2. Push till ACR
 

@@ -1,310 +1,40 @@
 # Slutgiltiga filer
 
-###
+### 10. Slutgiltiga filer&#x20;
 
-#### **Program.cs**
+#### **10. 1 Program.cs**
 
-csharp
+svamp-app/webapp/Svampsidan/Program.cs
 
-```csharp
-using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Driver;
+#### **10.2 Docker-compose.yml**
 
-var builder = WebApplication.CreateBuilder(args);
+svamp-app/webapp/Svampsidan/wwwroot/docker-compose.yml
 
-// Configure JSON serialization
-builder.Services.ConfigureHttpJsonOptions(options =>
-{
-    options.SerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
-});
+#### **10.3 Init-mongo.js**
 
-// Add MongoDB client
-var mongoHost = Environment.GetEnvironmentVariable("MONGODB_HOST") ?? "localhost";
-var mongoPort = Environment.GetEnvironmentVariable("MONGODB_PORT") ?? "27017";
-var mongoDatabase = Environment.GetEnvironmentVariable("MONGODB_DATABASE") ?? "SvampappDb";
+svamp-app/webapp/Svampsidan/wwwroot/init.mongo.js
 
-var connectionString = $"mongodb://{mongoHost}:{mongoPort}";
-builder.Services.AddSingleton<IMongoClient>(new MongoClient(connectionString));
-builder.Services.AddScoped(sp =>
-{
-    var client = sp.GetRequiredService<IMongoClient>();
-    return client.GetDatabase(mongoDatabase);
-});
+#### 10.4 Docker-compose.yml
 
-var app = builder.Build();
+svamp-app/webapp/Svampsidan/wwwroot/docker-compose.yml
 
-// Serve static files
-app.UseDefaultFiles();
-app.UseStaticFiles();
+#### 10.5 Index.html
 
-// API Endpoints
-app.MapGet("/api/svampar", async (IMongoDatabase db) =>
-{
-    var collection = db.GetCollection<Svamp>("Svampar");
-    var svampar = await collection.Find(_ => true).ToListAsync();
-    return Results.Ok(svampar);
-});
+svamp-app/webapp/Svampsidan/wwwroot/index.html
 
-app.MapGet("/api/svampar/{id}", async (int id, IMongoDatabase db) =>
-{
-    var collection = db.GetCollection<Svamp>("Svampar");
-    var svamp = await collection.Find(s => s.Id == id).FirstOrDefaultAsync();
-    return svamp is not null ? Results.Ok(svamp) : Results.NotFound();
-});
+#### 10.6 Dockerfile
 
-app.MapPost("/api/svampar", async (Svamp svamp, IMongoDatabase db) =>
-{
-    var collection = db.GetCollection<Svamp>("Svampar");
-    await collection.InsertOneAsync(svamp);
-    return Results.Created($"/api/svampar/{svamp.Id}", svamp);
-});
+svamp-app/webapp/Svampsidan/Dockerfile
 
-app.MapPut("/api/svampar/{id}", async (int id, Svamp updatedSvamp, IMongoDatabase db) =>
-{
-    var collection = db.GetCollection<Svamp>("Svampar");
-    var existing = await collection.Find(s => s.Id == id).FirstOrDefaultAsync();
-    if (existing == null) return Results.NotFound();
+#### 10.7 crud.html
 
-    updatedSvamp.Id = id;
-    updatedSvamp._id = existing._id;
-    var result = await collection.ReplaceOneAsync(s => s.Id == id, updatedSvamp);
-    return result.ModifiedCount > 0 ? Results.Ok(updatedSvamp) : Results.NotFound();
-});
+svamp-app/webapp/Svampsidan/wwwroot/CRUD.html
 
-app.MapDelete("/api/svampar/{id}", async (int id, IMongoDatabase db) =>
-{
-    var collection = db.GetCollection<Svamp>("Svampar");
-    var result = await collection.DeleteOneAsync(s => s.Id == id);
-    return result.DeletedCount > 0 ? Results.Ok() : Results.NotFound();
-});
+#### 10.8 Manifest&#x20;
 
-app.Run();
+svamp-app/webapp/Svampsidan/wwwroot/manifests
 
-public class Svamp
-{
-    [BsonId]
-    public ObjectId _id { get; set; }
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public bool IsComplete { get; set; }
-}
-```
-
-#### **docker-compose.yml**
-
-
-
-```yaml
-services:
-  mongodb:
-    image: mongo:latest
-    container_name: svamp-mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb-data:/data/db
-      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-    networks:
-      - svampapp-network
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  mongo-express:
-    image: mongo-express:latest
-    container_name: svamp-mongo-express
-    ports:
-      - "8081:8081"
-    environment:
-      ME_CONFIG_MONGODB_URL: mongodb://mongodb:27017
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: pass
-    networks:
-      - svampapp-network
-    depends_on:
-      mongodb:
-        condition: service_healthy
-
-  webapp:
-    build:
-      context: ./webapp/Svampsidan
-      dockerfile: Dockerfile
-    container_name: svampapp-webapp
-    ports:
-      - "8080:8080"
-    environment:
-      MONGODB_HOST: mongodb
-      MONGODB_PORT: "27017"
-      MONGODB_DATABASE: SvampappDb
-    networks:
-      - svampapp-network
-    depends_on:
-      mongodb:
-        condition: service_healthy
-
-volumes:
-  mongodb-data:
-
-networks:
-  svampapp-network:
-    driver: bridge
-```
-
-#### **init-mongo.js**
-
-```javascript
-// Initialize MongoDB database with sample svampar
-db = db.getSiblingDB('SvampappDb');
-
-db.Svampar.insertMany([
-    {
-        "Id": 1,
-        "Name": "Kantarell",
-        "IsComplete": false
-    },
-    {
-        "Id": 2,
-        "Name": "Karljohan",
-        "IsComplete": true
-    }
-]);
-
-print("Database initialized with sample svampar!");
-```
-
-#### Docker-compose.yml
-
-```yaml
-services:
-  mongodb:
-    image: mongo:latest
-    container_name: svamp-mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb-data:/data/db
-      - ./init.mongo.js:/docker-entrypoint-initdb.d/init.mongo.js:ro
-    networks:
-      - svampapp-network
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  mongo-express:
-    image: mongo-express:latest
-    container_name: svamp-mongo-express
-    ports:
-      - "8081:8081"
-    environment:
-      ME_CONFIG_MONGODB_URL: mongodb://mongodb:27017
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: pass
-    networks:
-      - svampapp-network
-    depends_on:
-      mongodb:
-        condition: service_healthy
-
-  webapp:
-    build:
-      context: ..
-      dockerfile: Dockerfile
-    image: svampapp-web
-    environment:
-      ASPNETCORE_URLS: http://+:8080
-      MONGODB_HOST: mongodb
-      MONGODB_PORT: "27017"
-      MONGODB_DATABASE: SvampappDb
-    ports:
-      - "8080:8080"
-    networks:
-      - svampapp-network
-    depends_on:
-      mongodb:
-        condition: service_healthy
-
-volumes:
-  mongodb-data:
-
-networks:
-  svampapp-network:
-    driver: bridge
-
-```
-
-#### Index.html
-
-
-
-```html
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Svampappen – Lista</title>
-  <style>
-    body{font-family:Arial,sans-serif;max-width:800px;margin:50px auto;padding:20px}
-    .svamp-item{padding:10px;margin:10px 0;background:#f0f0f0;border-radius:5px}
-    a,button,input{margin:5px;padding:10px}
-  </style>
-</head>
-<body>
-  <h1>Svampappen</h1>
-  <p><a href="crud.html">Gå till CRUD-sidan</a></p>
-
-  <div id="svampLista"></div>
-
-  <script>
-    const API = '/api/svampar';
-
-    async function loadSvampar() {
-      const response = await fetch(API);
-      const svampar = await response.json();
-      document.getElementById('svampLista').innerHTML = svampar.map(s => `
-        <div class="svamp-item">
-          ${s.name} - ${s.isComplete ? '✅ Hittad' : '❌ Inte hittad'}
-        </div>
-      `).join('');
-    }
-
-    document.addEventListener('DOMContentLoaded', loadSvampar);
-  </script>
-</body>
-</html>
-
-```
-
-#### Dockerfile
-
-```
-# --- build stage ---
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
-COPY Svampsidan.csproj .
-RUN dotnet restore
-COPY . .
-RUN dotnet publish -c Release -o /app /p:UseAppHost=false
-
-# --- runtime stage ---
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /app
-COPY --from=build /app .
-ENV ASPNETCORE_URLS=http://+:8080
-EXPOSE 8080
-ENTRYPOINT ["dotnet", "Svampsidan.dll"]
-
-```
-
-
-
-####
+#### 10.9&#x20;
 
 
 
