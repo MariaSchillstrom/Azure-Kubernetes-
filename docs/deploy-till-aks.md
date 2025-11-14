@@ -1,2 +1,93 @@
-# Page 5
+# Deploy till AKS
 
+## 5. Deploy till AKS
+
+I det här steget så applicerar vi alla manifest från steg 4. Detta innebär kort sagt att vi ser till att pizzan blir klar.
+
+## 5. Deploy till AKS
+
+I det här steget så applicerar vi alla manifest från steg 4. Detta innebär kort sagt att vi ser till att pizzan blir klar.
+
+#### 5.1 Applicera manifest&#x20;
+
+* Läser av alla yaml filerna i manifest
+
+```bash
+kubectl apply -f manifests/
+```
+
+Resultat:
+
+
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+#### 5.2 Verifiera
+
+* Kolla att pods startar
+
+```bash
+kubectl get pods
+```
+
+Resultat:&#x20;
+
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+#### 5.3 Hämta extern IP adress
+
+```bash
+kubectl get service svampapp-service --watch
+```
+
+Resultat;
+
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
+#### 5.4 Testa applikationen&#x20;
+
+* Läser av alla yaml filerna i manifest
+
+```bash
+kubectl apply -f manifests/
+```
+
+Resultat:
+
+
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+#### 5.2 Verifiera
+
+* Kolla att pods startar
+
+```bash
+kubectl get pods
+```
+
+Resultat:&#x20;
+
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+#### 5.3 Hämta extern IP adress
+
+```bash
+kubectl get service svampapp-service --watch
+```
+
+Resultat;
+
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
+#### 5.4 Testa applikationen&#x20;
+
+{% embed url="http://20.61.31.172" %}
+
+<figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+
+
+
+{% embed url="http://20.61.31.172/crud.html" %}
+
+<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>

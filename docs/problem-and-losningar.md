@@ -1,8 +1,8 @@
 # Problem & lösningar
 
-### 8. Problem & lösningar
+### 9. Problem & lösningar
 
-#### **8. 1 ACR** \*¹
+#### **9. 1 ACR** \*¹
 
 När jag försökte bygga och pusha min Docker image direkt i Azure med kommandot:
 

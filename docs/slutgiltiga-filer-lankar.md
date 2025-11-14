@@ -1,6 +1,6 @@
-# Slutgiltiga filer
+# Slutgiltiga filer/länkar
 
-### 10. Slutgiltiga filer&#x20;
+### 10. Slutgiltiga filer /länkar
 
 #### **10. 1 Program.cs**
 
@@ -34,7 +34,7 @@ svamp-app/webapp/Svampsidan/wwwroot/CRUD.html
 
 svamp-app/webapp/Svampsidan/wwwroot/manifests
 
-#### 10.9&#x20;
+####
 
 
 

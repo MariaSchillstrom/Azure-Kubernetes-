@@ -6,7 +6,7 @@ Jag har valt att skapa en applikation för svampentusiaster. Syftet med projekte
 
 Jag valde att skapa klustret i **Azure**, eftersom jag personligen föredrar den plattformen framför **AWS**.
 
-Eftersom det inte fanns någon komplett instruktion att följa, fick jag i vissa delar söka vägledning via **LLM** (Large Language Model) för att hitta lämpliga lösningar.
+Eftersom det inte fanns någon komplett instruktion att följa, fick jag i vissa delar söka vägledning via **LLM** (Large Language Model) för att hitta lämpliga lösningar, samt söka information på Kubernetes egna hemsida, samt via portalen i Azure.
 
 Projektets olika moment har genomförts i den ordning som presenteras nedan.;
 
@@ -86,11 +86,11 @@ Frontenden består av två separata HTML-filer:
 
 #### 1.7 Bilder
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 ***
 
@@ -102,18 +102,18 @@ Frontenden består av två separata HTML-filer:
 
 
 
-<figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### **Update**&#x20;
 
 * Från Karljohan till KarlJohan/Stensopp
 
-<figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### **Create**
 
 * Testsvamp är tillagd manuellt via terminalen, innan jag fick ordning på Program.cs samt CRUD.html
-* Trattkantarell är tillagd via <img src=".gitbook/assets/image (4).png" alt="" data-size="original">
+* Trattkantarell är tillagd via <img src=".gitbook/assets/image (4) (1).png" alt="" data-size="original">
 
-<figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 

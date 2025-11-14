@@ -43,17 +43,52 @@ layout:
 * 3.4 Ansluta till AKS med kubectl
 * 3.5 Verifiering
 
-### 4. Kubernetes Manifests (YAML-filer)
+### 4. Kunernetes manifests
+
+
+
+* 4.1 Analogi
+* 4.2 För Svampappen
+  * 4.2.1 Deployment (svampapp-deployment.yaml)
+  * 4.2.2 Service (svampapp-service.yaml)
+  * 4.2.3 Persistent Volume Claim (mongodb-pvc.yaml)
 
 
 
 ### 5. Deploy till AKS
 
+* 5.1 Applicera manifests
+* 5.2 Verifiera deployment
+* 5.3 Hämta extern IP-adress
+* 5.4 Testa applikationen
+
+
+
 
 
 ### 6. Nginx Ingress Controller
 
+* 6.1 Installera Nginx Ingress Controller
+* 6.2 Vänta tills det är klart
+* 6.3 Kontrollera att Ingress controller har en extern IP
+* 6.4 Skapa Ingress-regel
+* 6.5 Ändra svampapp-service till ClusterIP
+* 6.6 Applicera ändringarna
+* 6.7 Testa sidan
+
 
 
 ### 7. ArgoCD (GitOps)
+
+
+
+### 8. Säkerhet
+
+
+
+### 9. Problem & lösningar
+
+
+
+### 10.&#x20;
 

@@ -1,14 +1,39 @@
 # Förbättringsmöjligheter
 
-## 9. Förbättringsmöjligheter
+## 10. Förbättringsmöjligheter
 
-#### **9.1 För konfiguration:**
+#### **10.1 För konfiguration:**
 
 * &#x20;`configmap.yaml` (MongoDB connection info)
 * `secret.yaml` (MongoDB lösenord - om du vill ha säkerhet)
 
-
-
-#### 9.2  Separera crud:
+#### 10.2  Separera crud:
 
 * Separera crud till egna klasser
+
+#### 10.3 Säkerhet
+
+* **Autentisering:** Implementera inloggning (t.ex. Microsoft Entra ID, JWT tokens)
+* **Auktorisering:** Endast inloggade användare kan lägga till/ta bort svampar
+* **Admin-roll:** Särskilda rättigheter för administratörer
+
+**Bad en kompis testa CRUD.**&#x20;
+
+* Tog bort befintliga svampar (Karljohan, testsvampen)
+* La till nya svampar
+* Testa SQL injection-attacker (t.ex. `Redmond';drop table *--`) vilket dock inte gick eftersom det inte är en SQL databas. Hade funderingar på att använda SQL och då hade han lyckats med sin injection-attack, om jag inte validerat exempelvis inga tomma namn, eller max längd.
+
+<figure><img src=".gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+
+#### 10.4 Funktionalitet
+
+* **Databas-backup:** Automatiska backuper av MongoDB
+* **Sökfunktion:** Filtrera svampar efter namn eller status
+* **Bilduppladdning:** Ladda upp bilder på svampar
+* **Exportera data:** Exportera svamplistan till Excel/PDF
+
+#### 10.5 Övervakning&#x20;
+
+* **Azure Monitor:** Övervakning av appens prestanda Ufungerade inte med Azure student)
+* **Alerting:** Notifikationer vid fel eller hög belastning
+
