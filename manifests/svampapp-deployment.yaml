@@ -5,7 +5,7 @@ metadata:
   labels:
     app: svampapp
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: svampapp
