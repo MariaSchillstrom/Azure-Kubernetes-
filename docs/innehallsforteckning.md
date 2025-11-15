@@ -31,7 +31,8 @@ layout:
 
 * 2.1 Flöde
 * 2.2 Steg som utfördes
-* 2.3 Resultat
+* 2.3 Problem: ACR Tasks blockerat
+* 2.4 Resultat
 
 **3. Skapa AKS-kluster**
 
@@ -70,7 +71,13 @@ layout:
 
 **7. ArgoCD (GitOps)**
 
-
+* 7.1 Installera ArgoCD
+* 7.2 Exponera ArgoCD
+* 7.3 Logga in
+* 7.4 Skapa Application
+* 7.5 Synka applikationen
+* 7.6 Testa automatisk deployment
+* 7.7 Fördelar med GitOps
 
 **8. Säkerhet**
 
@@ -85,6 +92,15 @@ layout:
 
 
 **11. Länkar till slutgiltiga filer**
+
+* 11.1 Program.cs
+* 11.2 Dockerfile
+* 11.3 docker-compose.yml
+* 11.4 init-mongo.js
+* 11.5 index.html
+* 11.6 crud.html
+* 11.7 Kubernetes manifests
+* 11.8 Svampsidan.csproj
 
 
 
