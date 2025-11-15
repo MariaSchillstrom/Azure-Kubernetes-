@@ -1,0 +1,37 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - 'svamp-app/**'
+      - '.github/workflows/docker-build-push.yml'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Log in to ACR
+      run: |
+        az acr login --name svampapp
+    
+    - name: Build Docker image
+      run: |
+        cd svamp-app/webapp/Svampsidan
+        docker build -t svampapp.azurecr.io/svampapp:${{ github.sha }} .
+        docker tag svampapp.azurecr.io/svampapp:${{ github.sha }} svampapp.azurecr.io/svampapp:latest
+    
+    - name: Push to ACR
+      run: |
+        docker push svampapp.azurecr.io/svampapp:${{ github.sha }}
+        docker push svampapp.azurecr.io/svampapp:latest
