@@ -1,0 +1,26 @@
+name: CI - Build Svampapp
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore svamp-app/webapp/Svampsidan/Svampsidan.csproj
+
+      - name: Build
+        run: dotnet build svamp-app/webapp/Svampsidan/Svampsidan.csproj --configuration Release --no-restore
