@@ -1,6 +1,6 @@
 /* Bakgrundsbild och grundläggande styling */
 body {
-    background-image: url('Images/Ostronmussling.png');
+    background-image: url('/Images/Ostronmussling.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
