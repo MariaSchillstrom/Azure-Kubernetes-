@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: svampapp
-        image: svampapp.azurecr.io/svampapp:v1
+        image: svampapp.azurecr.io/svampapp:latest
         ports:
         - containerPort: 8080
         env:
