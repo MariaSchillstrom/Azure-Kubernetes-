@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <link rel="stylesheet" href="site.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Svampappen – Lista</title>
+  
+</head>
+<body>
+  <h1>Svampappen</h1>
+  <p><a href="crud.html">Gå till CRUD-sidan</a></p>
+
+  <div id="svampLista"></div>
+
+  <script>
+    const API = '/api/svampar';
+
+    async function loadSvampar() {
+      const response = await fetch(API);
+      const svampar = await response.json();
+      document.getElementById('svampLista').innerHTML = svampar.map(s => `
+        <div class="svamp-item">
+          ${s.name} - ${s.isComplete ? '✅ Hittad' : '❌ Inte hittad'}
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', loadSvampar);
+  </script>
+</body>
+</html>

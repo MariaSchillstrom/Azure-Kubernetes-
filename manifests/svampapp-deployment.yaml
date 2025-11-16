@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svampapp-deployment
+  labels:
+    app: svampapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: svampapp
+  template:
+    metadata:
+      labels:
+        app: svampapp
+    spec:
+      containers:
+      - name: svampapp
+        image: svampapp.azurecr.io/svampapp:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MONGODB_HOST
+          value: "mongodb-service"
+        - name: MONGODB_PORT
+          value: "27017"
+        - name: MONGODB_DATABASE
+          value: "SvampappDb"
+        - name: ASPNETCORE_URLS
+          value: "http://+:8080"

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Svampappen – CRUD</title>
+  <style>
+    body{font-family:Arial,sans-serif;max-width:800px;margin:50px auto;padding:20px}
+    .svamp-item{padding:10px;margin:10px 0;background:#f0f0f0;border-radius:5px;display:flex;gap:8px;align-items:center}
+    input,button{padding:10px;margin:5px}
+    .name{flex:1}
+  </style>
+</head>
+<body>
+  <h1>Svampappen – CRUD</h1>
+  <p><a href="index.html">Tillbaka till listan</a></p>
+
+  <div>
+    <input type="text" id="svampNamn" placeholder="Svampens namn">
+    <button onclick="addSvamp()">Lägg till</button>
+  </div>
+
+  <div id="svampLista"></div>
+
+  <script>
+    const API = '/api/svampar';
+    let nextId = 3; 
+
+    async function loadSvampar() {
+      const res = await fetch(API);
+      const svampar = await res.json();
+      
+      
+      if (svampar.length > 0) {
+        nextId = Math.max(...svampar.map(s => s.id)) + 1;
+      }
+      
+      renderSvampar(svampar);
+    }
+
+    function renderSvampar(svampar) {
+      const container = document.getElementById('svampLista');
+      container.innerHTML = svampar.map(s => `
+        <div class="svamp-item" id="row-${s.id}">
+          <input class="name" id="name-${s.id}" value="${s.name || ''}">
+          <label>
+            <input type="checkbox" ${s.isComplete ? 'checked' : ''} onchange="toggleComplete(${s.id}, this.checked)">
+            Hittad
+          </label>
+          <button onclick="updateSvamp(${s.id})">Uppdatera</button>
+          <button onclick="deleteSvamp(${s.id})">Ta bort</button>
+        </div>
+      `).join('');
+    }
+
+    // C
+    async function addSvamp() {
+      const namnEl = document.getElementById('svampNamn');
+      const name = (namnEl.value || '').trim();
+      if (!name) return;
+
+      await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: nextId++, name, isComplete: false }) 
+      });
+
+      namnEl.value = '';
+      await loadSvampar();
+    }
+
+    // U (namn)
+    async function updateSvamp(id) {
+      const name = document.getElementById(`name-${id}`).value;
+      const current = await (await fetch(`${API}/${id}`)).json();
+
+      await fetch(`${API}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, name, isComplete: !!current.isComplete })
+      });
+
+      await loadSvampar();
+    }
+
+    // U (isComplete)
+    async function toggleComplete(id, isChecked) {
+      const name = document.getElementById(`name-${id}`).value;
+
+      await fetch(`${API}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, name, isComplete: !!isChecked })
+      });
+
+      await loadSvampar();
+    }
+
+    // D
+    async function deleteSvamp(id) {
+      await fetch(`${API}/${id}`, { method: 'DELETE' });
+      await loadSvampar();
+    }
+
+    document.addEventListener('DOMContentLoaded', loadSvampar);
+  </script>
+</body>
+</html>
