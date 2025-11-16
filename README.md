@@ -1,15 +1,38 @@
 # Azure-Kubernetes-
-Deploya en applikation, till ett kubernetesklusterDetta projekt är en komplett end-to-end-implementation av en containeriserad webapplikation som körs i ett Kubernetes-kluster i Azure (AKS). Projektet utgår från en egenutvecklad CRUD-applikation för svampentusiaster, byggd i ASP.NET Core med MongoDB. Målet har varit att följa hela livscykeln för en modern molnapplikation – från lokal utveckling och containerisering, till registry-hantering, kluster-deployment, trafikstyrning och fullt automatiserat GitOps-flöde.
-Syftet har inte varit att skapa en avancerad produkt, utan att visa hur man från grunden bygger och driftar en applikation i Azure Kubernetes Service enligt etablerade DevOps-principer. Jag har därför valt att genomföra varje moment manuellt för att förstå vad som faktiskt händer, istället för att utgå från färdiga mallar eller automatiserade guider.
-Projektet innehåller följande huvudmoment:
-Lokal utveckling: CRUD-app med MongoDB och Mongo Express, körd via Docker Compose.
-Containerisering: Bygga och testa Docker-containers lokalt.
-Push till ACR: Publicera images till Azure Container Registry.
-Skapa AKS-kluster: Provisionera Kubernetes-miljö via Azure CLI och koppla klustret mot ACR.
-Manifest-filer: Skapa egna deployment-, service-, PVC- och ingress-filer.
-Deployment till AKS: Applicera YAML-filer med kubectl och verifiera pods och tjänster.
-Nginx Ingress Controller: Installera ingress, styra extern trafik och konsolidera tjänster under en extern IP.
-GitOps med ArgoCD: Automatisk deployment vid ändringar i GitHub.
-CI med GitHub Actions: Bygga, tagga och pusha Docker-images automatiskt till ACR.
-Sammanfattat visar projektet hur man tar en lokal applikation från utvecklingsmiljö → till container → till ACR → vidare till full drift i Kubernetes → och slutligen till ett automatiserat CI/CD-flöde med ArgoCD och GitHub Actions.
-Jag valde Azure eftersom jag föredrar plattformen framför AWS i detta sammanhang och ville arbeta direkt med verktyg som Azure CLI, AKS och ACR. Där dokumentation saknades eller var otydlig använde jag LLM-stöd för felsökning och för att förstå specifika steg i processen.
+Deploya en applikation till ett Kubernetes-kluster (AKS)
+
+Detta projekt är en komplett end-to-end-implementation av en containeriserad webapplikation som körs i ett Kubernetes-kluster i Azure (AKS). Applikationen är en egenutvecklad CRUD-lösning för svampentusiaster, byggd i ASP.NET Core med MongoDB som databas.
+
+Målet har varit att följa hela livscykeln för en modern molnapplikation – från lokal utveckling och containerisering till registry-hantering, kluster-deployment, trafikstyrning och ett fullt automatiserat GitOps-flöde.
+
+Syftet är inte att skapa en avancerad produkt, utan att visa hur man från grunden bygger, kör och driftar en applikation i Azure Kubernetes Service enligt etablerade DevOps-principer. Varje moment har genomförts manuellt för att få en djup förståelse för vad som faktiskt händer under huven.
+
+🔧 Projektets huvudmoment
+
+Lokal utveckling: CRUD-app med MongoDB och Mongo Express (Docker Compose)
+
+Containerisering: Bygga och testa Docker-containers lokalt
+
+Push till ACR: Publicera Docker-images i Azure Container Registry
+
+Skapa AKS-kluster: Provisionera kluster via Azure CLI och koppla det till ACR
+
+Kubernetes-manifests: Deployment, Service, PVC, Ingress
+
+Deployment till AKS: kubectl apply och verifiering av pods/tjänster
+
+Nginx Ingress Controller: Extern trafikstyrning via en gemensam IP
+
+GitOps med ArgoCD: Automatisk deploy vid kodändringar
+
+CI med GitHub Actions: Bygger, taggar och pushar Docker-images automatiskt
+
+🚀 Sammanfattning
+
+Projektet visar hela resan:
+
+Lokal utveckling → Container → ACR → AKS → Ingress → GitOps → CI/CD
+
+Resultatet är en fungerande, skalbar och automatiserad Kubernetes-deployment där GitHub Actions ansvarar för CI-delen och ArgoCD för CD-delen.
+
+Jag valde Azure då jag föredrar plattformen framför AWS i detta sammanhang och ville arbeta med Azure CLI, AKS och ACR. Där dokumentation saknades eller var otydlig använde jag LLM-stöd för felsökning och för att förstå specifika steg.
