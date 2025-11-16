@@ -1,32 +1,63 @@
-/* Bakgrundsbild och grundläggande styling */
+/* Grundläggande styling */
 body {
-    background-image: url('/Images/Ostronmussling.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    
+    background-color: #f5f5dc; /* Beige bakgrund */
     font-family: Arial, sans-serif;
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
 }
 
-/* Gör innehållet mer läsbart över bakgrundsbilden */
-.container {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 10px;
+/* Grön text på rubriker */
+h1 {
+    color: #2d5a2d; /* Mörkgrön */
+    font-size: 2.5em;
 }
 
+h2, h3 {
+    color: #3d6b3d; /* Mellangrön */
+}
+
+/* Grön text på paragrafer och länkar */
+p {
+    color: #2d5a2d;
+}
+
+a {
+    color: #3d8b3d; /* Ljusare grön för länkar */
+    text-decoration: none;
+    margin: 5px;
+    padding: 10px;
+}
+
+a:hover {
+    color: #5db95d; /* Ännu ljusare vid hover */
+    text-decoration: underline;
+}
+
+/* Svamp-items */
 .svamp-item {
     padding: 10px;
     margin: 10px 0;
-    background: #f0f0f0;
+    background: #e8f5e9; /* Ljusgrön bakgrund */
+    border-left: 4px solid #2d5a2d; /* Mörkgrön kant */
     border-radius: 5px;
+    color: #2d5a2d;
 }
 
-a, button, input {
+/* Knappar och inputs */
+button, input {
     margin: 5px;
     padding: 10px;
+    border: 2px solid #2d5a2d;
+    color: #2d5a2d;
+}
+
+button {
+    background-color: #3d8b3d;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2d5a2d;
 }
