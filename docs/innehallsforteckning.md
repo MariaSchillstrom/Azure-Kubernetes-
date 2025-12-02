@@ -67,8 +67,6 @@ layout:
 * 6.6 Applicera ändringarna
 * 6.7 Testa sidan
 
-
-
 **7. ArgoCD (GitOps)**
 
 * 7.1 Installera ArgoCD
@@ -79,29 +77,19 @@ layout:
 * 7.6 Testa automatisk deployment
 * 7.7 Fördelar med GitOps
 
-**8. Säkerhet**
+**8. GitHub Actions**
 
+* 8.1 Skapa Azure Service Principal
+* 8.2 Lägg till GitHub Secrets
+* 8.3 Skapa GitHub Actions Workflow
+* 8.4 Verifiera Github Actions
+* 8.5 Uppdatera Deployment för CI/CD
+* 8.6 Testa hela CI/CD flödet&#x20;
+* 8.7 Sammanfattning
 
+**9. Förbättringsmöjligheter**
 
-**9. Problem & lösningar**
+**10. Länkar till slutgiltiga filer**
 
+&#x20;**11.Resuser-websidor samt LLM**
 
-
-**10. Förbättringsmöjligheter**
-
-
-
-**11. Länkar till slutgiltiga filer**
-
-* 11.1 Program.cs
-* 11.2 Dockerfile
-* 11.3 docker-compose.yml
-* 11.4 init-mongo.js
-* 11.5 index.html
-* 11.6 crud.html
-* 11.7 Kubernetes manifests
-* 11.8 Svampsidan.csproj
-
-
-
-&#x20;**12.Resuser**

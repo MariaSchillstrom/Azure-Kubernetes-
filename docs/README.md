@@ -2,15 +2,15 @@
 layout: editorial
 ---
 
-# Azure-Kubernetes
+# Försättsblad
 
 #### **Namn: Maria Schillström**
 
-#### **Kurs: Kubernetes**
+#### **Kurs: Kubernetes**&#x20;
 
-#### Datum: 202511
+#### Datum: 202516
 
-#### Git:
+#### Git:[https://github.com/MariaSchillstrom/Azure-Kubernetes-.git](https://github.com/MariaSchillstrom/Azure-Kubernetes-.git)
 
 
 
